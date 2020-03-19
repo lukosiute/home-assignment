@@ -128,7 +128,7 @@ namespace GildedRoseApp.Tests
             IList<Item> Items = new List<Item> { new Item { Name = "Conjured", SellIn = 2, Quality = 50 }, };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
-            Assert.Equal(48, Items[0].SellIn);
+            Assert.Equal(48, Items[0].Quality);
         }
     }
 }

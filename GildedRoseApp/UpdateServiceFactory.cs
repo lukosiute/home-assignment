@@ -22,6 +22,10 @@ namespace GildedRoseApp
             if (name.Contains("Backstage passes"))
             {
                 return new PassUpdateService();
+            }   
+            if (name.Contains("Conjured"))
+            {
+                return new ConjuredUpdateService();
             }
             else
             {
