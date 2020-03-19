@@ -6,86 +6,43 @@ namespace GildedRoseApp
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        private IList<Inventory> _items;
+        public GildedRose(IList<Inventory> items)
         {
-            this.Items = Items;
+            _items = items;
         }
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in _items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
+                item.Item.Quality += UpdateSellIn(item.Type, item.Item.SellIn, item.Item.Quality);
 
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
 
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (item.Type != ItemType.Sulfuras)
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
+                    item.Item.Quality = item.Item.Quality <= 50 ? item.Item.Quality : 50;
+                    item.Item.SellIn -= 1;
                 }
             }
+        }
+
+        public static int UpdateSellIn(ItemType type, int days, int current)
+        {
+            return type switch
+            {
+                ItemType.Brie when days <= 0 => 2,
+                ItemType.Brie when days > 0 => 1,
+                ItemType.Normal when days < 0 => -2,
+                ItemType.Normal when days >= 0 => -1,
+                ItemType.Sulfuras => 0,
+                ItemType.Pass when days > 10 => 1,
+                ItemType.Pass when days <= 10 && days > 5 => 2,
+                ItemType.Pass when days <= 5 && days >= 0 => 3,
+                ItemType.Pass when days < 0 => -current,
+                _ => throw new NotImplementedException("bazinga")
+            };
         }
     }
 }
