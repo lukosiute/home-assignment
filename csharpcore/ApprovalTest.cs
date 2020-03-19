@@ -5,7 +5,7 @@ using System.Text;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 
-namespace csharpcore
+namespace GildedRoseApp.Tests
 {
     [UseReporter(typeof(DiffReporter))]
     public class ApprovalTest

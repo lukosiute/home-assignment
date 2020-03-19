@@ -1,6 +1,10 @@
-﻿namespace csharpcore
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GildedRoseApp
 {
-    public class Item
+   public class Item
     {
         public string Name { get; set; }
         public int SellIn { get; set; }
