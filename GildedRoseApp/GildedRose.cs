@@ -1,4 +1,4 @@
-﻿using GildedRoseApp.Interfaces;
+﻿
 using GildedRoseApp.Services;
 using System;
 using System.Collections.Generic;
@@ -13,43 +13,29 @@ namespace GildedRoseApp
         {
             _items = items;
         }
+        public void DailyService(int days)
+        {
+            for (var i = 0; i < days; i++)
+            {
+                Console.WriteLine("-------- day " + i + " --------");
+                Console.WriteLine("name, sellIn, quality");
+                foreach (var item in _items)
+                {
+                    Console.WriteLine(item.Name + ", " + item.SellIn + ", " + item.Quality);
+                }
+                Console.WriteLine("");
+                UpdateQuality();
+            }
+        }
 
         public void UpdateQuality()
         {
             foreach (var item in _items)
             {
-                var type = GetItemType(item);
-                var service = UpdateServiceFactory.Create(type);
-                var bla = service.UpdateQuality(item);
-                service.Validate(item);
-                if(type != ItemType.Sulfuras)
-                {
-                    item.SellIn--;
-                }
- 
+                var service = UpdateServiceFactory.Create(item.Name);
+                service.UpdateQuality(item);
+                service.LowerSellIn(item);
             }
         }
-
-       
-        public ItemType GetItemType(Item item)
-        {
-            if (item.Name.Contains("Aged Brie"))
-            {
-                return ItemType.Brie;
-            }
-            if (item.Name.Contains("Sulfuras"))
-            {
-                return ItemType.Sulfuras;
-            }
-            if (item.Name.Contains("Backstage passes"))
-            {
-                return ItemType.Pass;
-            }
-            else
-            {
-                return ItemType.Normal;
-            }
-        }
-
     }
 }

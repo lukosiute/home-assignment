@@ -1,10 +1,8 @@
-﻿using GildedRoseApp.Interfaces;
-using System.Threading.Tasks;
-namespace GildedRoseApp.Services
+﻿namespace GildedRoseApp.Services
 {
-    internal class PassUpdateService : ValidationService, IInventoryUpdateService
+    internal class PassUpdateService : InventoryUpdateService
     {
-        public async Task UpdateQuality(Item item)
+        public override void UpdateQuality(Item item)
         {
             if (item.SellIn > 10)
             {
@@ -22,6 +20,7 @@ namespace GildedRoseApp.Services
             {
                 item.Quality = 0;
             }
+            ValidateQuality(item);
         }
     }
 }

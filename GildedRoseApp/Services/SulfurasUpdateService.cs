@@ -1,20 +1,17 @@
-﻿using GildedRoseApp.Interfaces;
+﻿
 using System.Threading.Tasks;
 
 namespace GildedRoseApp.Services
 {
-    internal class SulfurasUpdateService : ValidationService, IInventoryUpdateService
+    internal class SulfurasUpdateService : InventoryUpdateService
     {
-
-        public async  Task UpdateQuality(Item item)
+        public override void ValidateQuality(Item item)
         {
-            
+
+            item.Quality = item.Quality == 80 ? item.Quality : 80;
         }
-
-        public override void Validate(Item item)
+        public override void LowerSellIn(Item item)
         {
-            
-            item.Quality = item.Quality == 80 ? item.Quality :80;
         }
     }
 }

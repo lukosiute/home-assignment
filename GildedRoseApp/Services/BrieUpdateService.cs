@@ -1,12 +1,12 @@
-﻿using GildedRoseApp.Interfaces;
+﻿
 using GildedRoseApp.Services;
 using System.Threading.Tasks;
 
 namespace GildedRoseApp
 {
-    internal class BrieUpdateService : ValidationService, IInventoryUpdateService
+    internal class BrieUpdateService :  InventoryUpdateService
     {
-        public async Task UpdateQuality(Item item)
+        public override void UpdateQuality(Item item)
         {
             if (item.SellIn > 0)
             {
@@ -16,6 +16,9 @@ namespace GildedRoseApp
             {
                 item.Quality += 2;
             }
+            ValidateQuality(item);
         }
+
+  
     }
 }

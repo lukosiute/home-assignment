@@ -6,10 +6,25 @@ namespace GildedRoseApp
 {
     public class Program
     {
+       
         public static void Main(string[] args)
         {
             Console.WriteLine("OMGHAI!");
-            IList<Item> items = new List<Item>
+            var items = GetInitialItemsList();
+
+
+            // this conjured item does not work properly yet
+            //new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
+
+
+            var app = new GildedRose(items);
+            app.DailyService(31);
+           
+    
+
+            List<Item> GetInitialItemsList()
+            {
+                var items = new List<Item>
             {
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
 
@@ -28,26 +43,9 @@ namespace GildedRoseApp
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 49 },
 
             };
-
-
-            // this conjured item does not work properly yet
-            //new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-
-
-            var app = new GildedRose(items);
-
-
-            for (var i = 0; i < 31; i++)
-            {
-                Console.WriteLine("-------- day " + i + " --------");
-                Console.WriteLine("name, sellIn, quality");
-                for (var j = 0; j < items.Count; j++)
-                {
-                    System.Console.WriteLine(items[j].Name + ", " + items[j].SellIn + ", " + items[j].Quality);
-                }
-                Console.WriteLine("");
-                app.UpdateQuality();
+                return items;
             }
         }
+
     }
 }

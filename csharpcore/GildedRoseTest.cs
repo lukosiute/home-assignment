@@ -10,18 +10,18 @@ namespace GildedRoseApp.Tests
         [Fact]
         public void Quality_is_never_negative()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Standard item", SellIn = 3, Quality = 0 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Random item", SellIn = 3, Quality = 0 } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(0, Items[0].Quality);
         }
 
         [Fact]
-        public void Standard_item_quality_drops_1_a_day()
+        public void Normal_item_quality_drops_1_a_day()
         {
             IList<Item> Items = new List<Item>
             {
-                new Item{ Name = "Standard item", SellIn = 12, Quality = 5 } ,
+                new Item{ Name = "Random item", SellIn = 12, Quality = 5 } ,
                 new Item { Name = "Aged Brie", SellIn = 9, Quality = 5 }
             };
             GildedRose app = new GildedRose(Items);
@@ -33,7 +33,7 @@ namespace GildedRoseApp.Tests
         [Fact]
         public void After_sell_date_quality_degrades_x2()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Standard item", SellIn = 0, Quality = 5 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Random item", SellIn = 0, Quality = 5 } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(3, Items[0].Quality);
